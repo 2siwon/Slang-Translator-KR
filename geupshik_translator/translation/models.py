@@ -1,5 +1,6 @@
 from django.db import models
-
+# 일반어를 급식체로 변경하는 알고리즘을 지닌 함수 convert import하기
+from .utils import convert
 
 class Visitor(models.Model):
     ip = models.GenericIPAddressField(blank=True, null=True)
@@ -27,5 +28,5 @@ class Translation(models.Model):
         # 번역 알고리즘 관련 부분 - utils.py
         # 번역할 일반어를 form으로 제출 시, 번역된 급식체를 필드에 저장하면서
         # 모델 인스턴스를 저장함
-        self.post_translated_text = self.pre_translated_text + '번역됨'
+        self.post_translated_text = convert(self.pre_translated_text)
         super().save(*args, **kwargs)
