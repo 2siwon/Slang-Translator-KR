@@ -2,10 +2,8 @@ from .base import *
 
 
 SECRET_KEY = config_secret_common['django']['secret_key']
+DATABASES = config_secret_common['django']['databases']
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
