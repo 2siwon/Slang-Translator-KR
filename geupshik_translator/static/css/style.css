@@ -1,0 +1,82 @@
+@font-face {
+  font-family: EBS;
+  src: url(../EBS_SB.otf);
+}
+
+body {
+  font-size: 14px;
+  background-image: url(../background.png);
+  background-repeat: no-repeat;
+}
+
+.vt-pad-lg {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.vt-pad-md {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.vt-pad-sm {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid white;
+}
+
+.logo {
+  background-image: url(../logo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 80px;
+  width: 100%;
+  margin: 0;
+}
+
+.font-ebs {
+  font-family: EBS;
+}
+
+.title {
+  font-size: 48px;
+  color: #88170B;
+  letter-spacing: 0.15em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.translate-form {
+  min-width: 450px;
+  border-radius: 10px;
+  background-color: #FAFAFA;
+}
+
+.position-static {
+  position: static;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.translate-btn {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translateX(50%);
+  width: 160px;
+  background-color: #88170B;
+  color: white;
+  box-shadow: 0px 2px 4px #000000;
+}
+
+.form-label {
+  color: #FAFAFA;
+  font-size: 18px;
+}

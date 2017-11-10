@@ -3,27 +3,31 @@
 <!--1. Django Views/Form 사용-->
 
 <!--일반어(번역할 언어) form-->
+<div class="row justify-content-between position-relative">
+    <div class="position-static col-md-5 text-center">
+        <form action="" method="POST">{% csrf_token %}
+            <div class="pre-translated-form">
+                <p class="form-label vt-pad-sm border-bottom">
+                    일반어
+                </p>
+                {{ form.pre_translated_text }}
+            </div>
+            <!--번역하기 button-->
+            <input class="btn translate-btn" type="submit" value="번역하기 >"/>
 
-<form action="" method="POST">{% csrf_token %}
-    <div class="pre-translated-form">
-        {{ form }}
+        </form>
     </div>
-    <!--번역하기 button-->
-    <input type="submit" value="번역하기 >" />
-</form>
-<!--급식체(번역된 언어) 표시 부분-->
-<textarea name="post-translated-content" id="" cols="30" rows="10"></textarea>
 
-
-
-
-
-
-
-
-
-
-
+    <!--급식체(번역된 언어) 표시 부분-->
+    <div class="col-md-5 text-center">
+        <p class="form-label vt-pad-sm border-bottom">
+            급식체
+        </p>
+        <textarea class="translate-form post-translated-content" name="post-translated-content" id="" cols="40"
+                  rows="10">
+        </textarea>
+    </div>
+</div>
 
 
 <!--&lt;!&ndash;2. DRF/AJAX 버전&ndash;&gt;-->
