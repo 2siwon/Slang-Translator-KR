@@ -8,7 +8,6 @@
 __pycache__/
 local_settings.py
 db.sqlite3
-media
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -222,12 +221,17 @@ venv.bak/
 
 # End of https://www.gitignore.io/api/linux,macos,python,django,pycharm
 
-.config/
-.config_secret/
+#Custom
 .idea/
-
+.config_secret/
+.static_root/
+media/
+.media/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# ebignore
+!.config_secret/
