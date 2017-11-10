@@ -1,11 +1,13 @@
 from django import forms
 
-
-# 번역을 할 텍스트를 넣는 form
-class TranslationCreateForm(forms.Form):
-    pre_translated_text = forms.CharField(widget=forms.Textarea)
+from .models import Translation
 
 
-# 번역 수정을 제안할 텍스트를 넣는 form
-class TranslationEditForm(forms.Form):
-    edited_translated_text = forms.CharField()
+# Translation 모델에 대한 form
+class TranslationForm(forms.ModelForm):
+    class Meta:
+        model = Translation
+        fields = [
+            'pre_translated_text',
+            'edited_translated_text',
+        ]
