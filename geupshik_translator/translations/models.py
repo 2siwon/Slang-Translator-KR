@@ -22,7 +22,7 @@ class Translation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # 필수 필드
 
     def __str__(self):
-        return f"visitor:{self.author}:translation"
+        return f"visitor:{self.author}:translations"
 
     def save(self, *args, **kwargs):
         # 번역 알고리즘 관련 부분 - utils.py

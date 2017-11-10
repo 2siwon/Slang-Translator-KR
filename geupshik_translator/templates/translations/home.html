@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!--DRF/AJAX 버전-->
+<!--일반어(번역할 언어) input 영역-->
+<!--이름은 serializer의 필드 이름으로-->
+<form class='pre-translated-form' action="">
+    <textarea name="pre_translated_text" id="pre-ts-content" cols="30" rows="10"></textarea>
+</form>
+<!--번역하기 button-->
+<button type="submit" id="translate-button">번역하기 ></button>
+<!--급식체(번역된 언어) output 영역-->
+<textarea name="post-translated-content" id="post-ts-content" cols="30"
+          rows="10"></textarea>
+
+
+<!--jquery script tag-->
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+<!--번역하기 버튼을 클릭시 번역을 AJAX POST 요청으로 보내기-->
+<script>
+    var translateButton = $('#translate-button')
+    translateButton.click(function(e){
+        $(this).css('background', 'black');
+
+        // form 안의 데이터를 serialize하기
+        var form = $('.pre-translated-form');
+        var formData = getFormData($(form));
+        // var formData = $(form).serializeArray();
+        console.log(formData);
+        console.log(JSON.stringify(formData));
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'translations:create' %}",
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            cache: false,
+            // data: JSON.stringify(formData),
+            data: formData,
+            //contentType:"application/json; charset=utf-8",
+            //dataType:"json",
+            success: function(data) {
+                console.log(data)
+                $('#post-ts-content').html(data['post_translated_text'])
+            },
+            error: function(data) {
+                console.log(data)
+            },
+        });
+
+        })
+
+     function getFormData(form){
+        var unindexed_array = form.serializeArray();
+        var indexed_array = {};
+
+        $.map(unindexed_array, function(n, i){
+            indexed_array[n['name']] = n['value'];
+
+        });
+        return indexed_array;
+    }
+
+</script>
+{% endblock %}
