@@ -45,7 +45,8 @@ ADMIT_LIST = [
 
 LENGTH_ADMIT_LIST = len(ADMIT_LIST)
 
-def append_admit(li, morpheme, word):
+
+def append_admit(li, previous_word, current_word):
     """
     인정 구문을 추가하는 함수
     :param li: 인정 구문을 추가하려고 하는 대상 list
@@ -53,21 +54,26 @@ def append_admit(li, morpheme, word):
     :param word: 현재 단어
     :return:
     """
-    if morpheme == 'XSA' or morpheme == 'VX+EP':
-        li.append(f'{word[0]} ')
+    print(f'THIS IS APPEND_ADMIT: WORD : {current_word}')
+    print(f'THIS IS PREVIOUS WORD : WORD : {previous_word}')
+    def has_jongsong(ch):
+        ch = ord(ch) - 0xAC00
+        return ch % 28
+    # ?
+    if previous_word[1] == 'XSA' or previous_word[1] == 'VX+EP':
+        li.append(f'{current_word[0]} ')
     else:
-        li.append("은 부분 ")
+        # 만약 '다' 전에 종성이 있을 경우(예: 있다, 없다
+        if has_jongsong(previous_word[0]):
+            li.append("는 부분 ")
+        # 종성이 없을 경우(예: 이다)
+        else:
+            li.append(f'{current_word[0]}. ')
     li.append(ADMIT_LIST[random.randint(0, LENGTH_ADMIT_LIST - 1)])
-
-
-def jong_sung_check(char):
-    pass
-
 
 def make_hangul_unicode(cho, jung, jong):
     unicode = 0xAC00 + ((cho * 21) + jung) * 28 + jong
     return chr(unicode)
-
 
 def string_to_yamin(str):
     """
@@ -96,14 +102,16 @@ def convert(string):
 
     # 전달받은 string을 (<단어>, <품사>) Tuple 단위로 쪼개어 list를 반환
     word_class_list = mecab.pos(string)
-    # print(word_class_list)
+    pprint(word_class_list)
 
     # 번역 문장 생성
     translated_words = []
     for i, word in enumerate(word_class_list):
+        # 끝말일 경우 - 품사가 'EC'=연결어미 아니면 'EF'=종결어미 일 경우
         if word[1] == 'EC' or word[1] == 'EF':
+            # 만약 문장의 끝이 '다'일 경우
             if word[0] == '다':
-                append_admit(translated_words, word_class_list[i - 1][1], word)
+                append_admit(translated_words, word_class_list[i - 1], word)
             elif '요' in word[0]:
                 # ~~A요 (예 오지'구요', 대단하'고요')
                 translated_words.append(word[0][0])
@@ -136,7 +144,6 @@ if __name__ == "__main__":
     string_1 = "요즘 급식충에 대한 부정적인 이미지가 퍼지자 고학년 층에서는 사용을 자제하는 편이다. 특히 고교생들은 남학생들 끼리 장난칠 때나 컨셉잡을 때만 쓰는 듯. 그러나 모두가 그렇다는 것은 아니며, 인터넷이나 게임 같이 익명성이 보장된 곳에서는 고교생이나 그 이상도 써대는 걸 흔하게 볼 수 있다. 심지어는 방송을 하는 스트리머들 중에도 급식체를 쓰는 인간들이 있다.(...) 즉, 이들도 예외는 없다."
     print(string_1)
     print(convert(string_1))
-    #
     # string_2 = "서든어택, 리그 오브 레전드에서 많이 볼 수 있다!"
     # print(string_2)
     # # 서든, 롤에서 많이 볼 수 있는 부분? 어 ㅇㅈ 씹ㅇㅈ하는 부분이구연~
