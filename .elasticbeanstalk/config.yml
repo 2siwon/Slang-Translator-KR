@@ -1,0 +1,18 @@
+branch-defaults:
+  master:
+    environment: Slang-Translator-Ko
+    group_suffix: null
+global:
+  application_name: Slang-Translator-Ko
+  branch: null
+  default_ec2_keyname: Slang-Translator-Ko-Keypair
+  default_platform: Docker 17.03.2-ce
+  default_region: ap-northeast-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: Slang-Translator-Ko
+  repository: null
+  sc: git
+  workspace_type: Application
