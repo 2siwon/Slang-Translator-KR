@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,13 +7,38 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>급식체번역기</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
 <!--제목-->
 <h1><a href="{% url 'home' %}">급식체번역기 v.0.1</a></h1>
 <h2>이거 실화임?</h2>
-{% block content %}
-{% endblock %}
 </body>
+<div class="container">
+    <div class="vt-pad-lg row justify-content-md-center">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-2">
+            <p class="logo"></p>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <span class="title font-ebs">급식체번역기 v.0.1</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">이거 실화임?</h2>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock %}
+</div>
 </html>
