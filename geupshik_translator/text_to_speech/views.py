@@ -1,7 +1,12 @@
+import datetime
+import time
 import urllib.request
 import urllib.parse
 
-from django.shortcuts import render, redirect
+import os
+
+from django.conf import settings
+from django.shortcuts import render
 
 
 def send_to_naver(request):
@@ -27,15 +32,28 @@ def send_to_naver(request):
         response = urllib.request.urlopen(send_to_naver_request, data=data.encode('utf-8'))
         rescode = response.getcode()
 
-        if (rescode == 200):
+        if rescode == 200:
             response_body = response.read()
-            with open('media/1112.mp3', 'wb') as f:
+
+            now = datetime.datetime.now()
+            nowDate = now.strftime('%Y-%m-%d')
+            nowTime = now.strftime('%H-%M-%S')
+
+            if not os.path.isdir(nowDate):
+                os.mkdir(nowDate)
+            filename = f'{nowDate}/{nowTime}.mp3'
+
+            with open(filename, 'wb') as f:
                 f.write(response_body)
 
-            return redirect('index.html')
+            file_path = os.path.join(settings.BASE_DIR, filename)
+            print(f'file_path : {file_path}')
+
+            context = {
+                'file_path': file_path,
+            }
+            return render(request, 'index.html', context)
         else:
             print(f"Error Code: {rescode}")
-
-
     else:
         return render(request, 'index.html')

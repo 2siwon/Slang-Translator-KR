@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<audio src="media/1112.mp3" controls> </audio>
+<audio src="{{file_path}}" controls> </audio>
 
 <form action="{% url 'send_to_naver' %}" method="post">
     {% csrf_token %}
