@@ -1,4 +1,5 @@
 import random
+
 from konlpy.tag import Mecab
 from requests import put
 
@@ -18,6 +19,7 @@ YAMIN_DICT = {
     '식': '싀',
     '왕': '앟',
     '진짜': '레알',
+    '머리': '뚝배기',
 }
 
 ADMIT_LIST = [
@@ -31,6 +33,7 @@ ADMIT_LIST = [
 ]
 
 LENGTH_ADMIT_LIST = len(ADMIT_LIST)
+
 
 def append_admit(li, morpheme, word):
     """
@@ -46,12 +49,15 @@ def append_admit(li, morpheme, word):
         li.append("은 부분 ")
     li.append(ADMIT_LIST[random.randint(0, LENGTH_ADMIT_LIST - 1)])
 
+
 def jong_sung_check(char):
     pass
+
 
 def make_hangul_unicode(cho, jung, jong):
     unicode = 0xAC00 + ((cho * 21) + jung) * 28 + jong
     return chr(unicode)
+
 
 def string_to_yamin(str):
     """
@@ -67,6 +73,7 @@ def string_to_yamin(str):
         else:
             li.append(char)
     return "".join(li)
+
 
 def convert(string):
     """
@@ -84,8 +91,8 @@ def convert(string):
     # 번역 문장 생성
     translated_words = []
     for i, word in enumerate(word_class_list):
-        if word[1] == 'EF' and random.random() < 0.5:
-            append_admit(translated_words, word_class_list[i-1][1], word)
+        if word[1] == 'EF':
+            append_admit(translated_words, word_class_list[i - 1][1], word)
         else:
             translated_words.append(word[0])
 
@@ -94,7 +101,7 @@ def convert(string):
 
     # 띄어쓰기 http://freesearch.pe.kr/archives/4647 API 사용
     translated_string_spaced = put('http://35.201.156.140:8080/spacing',
-                      data={'sent': translated_string}).json()['sent']
+                                   data={'sent': translated_string}).json()['sent']
 
     # 야민정음에 따라 글자 변경
     yamin_string = string_to_yamin(translated_string_spaced)
